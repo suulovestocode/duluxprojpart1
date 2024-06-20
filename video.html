@@ -36,8 +36,8 @@
 </head>
 <body>
   <div id="videoContainer">
-    <video id="videoElement" autoplay loop muted>
-      <source src="./video/videoforar.mp4" type="video/mp4">
+    <video id="videoElement" autoplay loop>
+      <source src="./videofile/videoforar.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <button id="actionButton">Click Me</button>
@@ -47,12 +47,20 @@
     const video = document.getElementById('videoElement');
     const button = document.getElementById('actionButton');
 
-    video.addEventListener('play', () => {
+    // Function to show button after 5 seconds
+    function showButton() {
       setTimeout(() => {
         button.style.display = 'block';
-      }, 5000); // Show the button after 5 seconds
+      }, 5000);
+    }
+
+    // Check if video is ready to play
+    video.addEventListener('canplay', () => {
+      // Start showing button after 5 seconds
+      showButton();
     });
 
+    // Handle button click
     button.addEventListener('click', () => {
       alert('Button clicked!');
     });
