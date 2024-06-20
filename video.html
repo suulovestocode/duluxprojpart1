@@ -32,6 +32,16 @@
       border: none;
       cursor: pointer;
     }
+    /* Style for AR scene */
+    #arContainer {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1; /* Ensure AR scene is on top */
+    }
   </style>
 </head>
 <body>
@@ -42,9 +52,20 @@
     </video>
     <button id="actionButton">Shake Off</button>
   </div>
+
+  <!-- A-Frame Scene for AR -->
+  <div id="arContainer">
+    <a-scene embedded arjs>
+      <a-marker preset="hiro">
+        <a-entity gltf-model="./path/to/your/3dmodel.glb" scale="0.1 0.1 0.1"></a-entity>
+      </a-marker>
+    </a-scene>
+  </div>
+
   <script>
     const video = document.getElementById('videoElement');
     const button = document.getElementById('actionButton');
+    const arContainer = document.getElementById('arContainer');
 
     // Function to show button after 5 seconds
     function showButton() {
@@ -61,7 +82,11 @@
 
     // Handle button click
     button.addEventListener('click', () => {
-      window.location.href = 'glbloader.html';
+      // Hide video and button
+      video.style.display = 'none';
+      button.style.display = 'none';
+      // Show AR container
+      arContainer.style.display = 'block';
     });
   </script>
 </body>
