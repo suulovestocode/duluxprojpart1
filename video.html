@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Page</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+    }
+    #videoContainer {
+      position: relative;
+    }
+    #videoElement {
+      width: 100%;
+      height: auto;
+    }
+    #actionButton {
+      display: none;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: red;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="videoContainer">
+    <video id="videoElement" autoplay loop muted>
+      <source src="./video/videoforar.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <button id="actionButton">Click Me</button>
+  </div>
+
+  <script>
+    const video = document.getElementById('videoElement');
+    const button = document.getElementById('actionButton');
+
+    video.addEventListener('play', () => {
+      setTimeout(() => {
+        button.style.display = 'block';
+      }, 5000); // Show the button after 5 seconds
+    });
+
+    button.addEventListener('click', () => {
+      alert('Button clicked!');
+    });
+  </script>
+</body>
+</html>
