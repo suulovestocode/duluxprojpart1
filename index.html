@@ -105,6 +105,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1;
+            display: none;
         }
         
         #video-container video {
@@ -161,13 +162,6 @@
     </a-scene>
 
     <script>
-        // Show the video when the page loads
-        window.onload = function() {
-            document.getElementById('video-container').style.display = 'flex';
-            document.getElementById('video').play();
-            document.getElementById('shake-off-button').style.display = 'block';
-        };
-
         // Handle the 'SHAKE OFF' button click event
         document.getElementById('shake-off-button').addEventListener('click', function() {
             document.getElementById('video-container').style.display = 'none';
@@ -180,12 +174,15 @@
         document.addEventListener('arjs-marker-found', function(ev){
             document.getElementById('video-container').style.display = 'flex';
             document.getElementById('video').play();
+            document.getElementById('shake-off-button').style.display = 'block';
         });
 
-        // Hide the video when marker is lost
+        // Hide the video and button when marker is lost
         document.addEventListener('arjs-marker-lost', function(ev){
             document.getElementById('video-container').style.display = 'none';
             document.getElementById('video').pause();
+            document.getElementById('shake-off-button').style.display = 'none';
+            document.getElementById('model').setAttribute('visible', 'false');
         });
     </script>
 </body>
