@@ -1,112 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Video Page</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: aqua;
-    }
-    #videoContainer {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    #videoElement {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    #actionButton {
-      display: none;
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: red;
-      border: none;
-      cursor: pointer;
-    }
-    /* Style for AR scene */
-    #arContainer {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1; /* Ensure AR scene is on top */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR.js Marker Detection with Fullscreen Responsive Video</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+        
+        #video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        #video-container video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        a-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
 <body>
-  <div id="videoContainer">
-    <video id="videoElement" autoplay muted>
-      <source src="./videoforar.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <button id="actionButton">Shake Off</button>
-  </div>
-  <div id="arContainer">
+    <div id="video-container" style="display: none;">
+        <video id="video" autoplay loop muted>
+            <source src="path/to/your/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
     <a-scene embedded arjs>
-      <a-marker preset="hiro">
-        <a-entity id="3d-model" gltf-model="./BoomBox.glb" scale="0.1 0.1 0.1"></a-entity>
-      </a-marker>
-      <a-entity camera></a-entity>
+        <a-marker preset="hiro">
+            <!-- GLB Model -->
+            <a-gltf-model src="path/to/your/model.glb" scale="0.5 0.5 0.5" position="0 0 0"></a-gltf-model>
+        </a-marker>
+        
+        <!-- Camera -->
+        <a-entity camera></a-entity>
     </a-scene>
-  </div>
 
-  <script>
-    const video = document.getElementById('videoElement');
-    const button = document.getElementById('actionButton');
-    const arContainer = document.getElementById('arContainer');
-    const model = document.getElementById('3d-model');
+    <script>
+        // Show the video when marker is detected
+        document.addEventListener('arjs-marker-found', function(ev){
+            document.getElementById('video-container').style.display = 'flex';
+            document.getElementById('video').play();
+        });
 
-    // Function to show button after 5 seconds
-    function showButton() {
-      setTimeout(() => {
-        button.style.display = 'block';
-      }, 5000);
-    }
-
-    // Check if video is ready to play
-    video.addEventListener('canplay', () => {
-      // Start showing button after 5 seconds
-      showButton();
-    });
-
-    // Handle button click
-    button.addEventListener('click', () => {
-      console.log('Button clicked');
-      // Hide video and button
-      video.style.display = 'none';
-      button.style.display = 'none';
-      // Show AR container
-      arContainer.style.display = 'block';
-      // Make sure the 3D model is visible
-      model.setAttribute('visible', 'true');
-    });
-
-    // Initially hide the 3D model
-    model.setAttribute('visible', 'false');
-
-    // Debugging: log when model is loaded
-    model.addEventListener('model-loaded', () => {
-      console.log('3D model loaded successfully');
-    });
-
-    // Debugging: check for errors
-    model.addEventListener('error', (e) => {
-      console.error('Error loading 3D model', e);
-    });
-  </script>
+        // Hide the video when marker is lost
+        document.addEventListener('arjs-marker-lost', function(ev){
+            document.getElementById('video-container').style.display = 'none';
+            document.getElementById('video').pause();
+        });
+    </script>
 </body>
 </html>
