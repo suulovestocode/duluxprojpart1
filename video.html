@@ -57,8 +57,9 @@
   <div id="arContainer">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <a-entity gltf-model="./path/to/your/3dmodel.glb" scale="0.1 0.1 0.1"></a-entity>
+        <a-entity id="3d-model" gltf-model="./BoomBox.glb" scale="0.1 0.1 0.1"></a-entity>
       </a-marker>
+      <a-entity camera></a-entity>
     </a-scene>
   </div>
 
@@ -66,6 +67,7 @@
     const video = document.getElementById('videoElement');
     const button = document.getElementById('actionButton');
     const arContainer = document.getElementById('arContainer');
+    const model = document.getElementById('3d-model');
 
     // Function to show button after 5 seconds
     function showButton() {
@@ -87,7 +89,12 @@
       button.style.display = 'none';
       // Show AR container
       arContainer.style.display = 'block';
+      // Make sure the 3D model is visible
+      model.setAttribute('visible', 'true');
     });
+
+    // Initially hide the 3D model
+    model.setAttribute('visible', 'false');
   </script>
 </body>
 </html>
