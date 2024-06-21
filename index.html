@@ -10,14 +10,10 @@
     <a-marker preset="hiro">
       <a-gltf-model src="./BoomBox.glb" scale="0.5 0.5 0.5" position="0 0 0"></a-gltf-model>
       <a-box position="0 0.5 0" material="color: red;"></a-box>
+      <a-video src="./videoforar.mp4" width="2" height="1.5" position="0 0.5 0"></a-video>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
-  <script>
-    // JavaScript to handle marker detection and navigation to another page
-    document.querySelector('a-marker').addEventListener('markerFound', () => {
-      window.location.href = 'video.html';
-    });
-  </script>
+  
 </body>
 </html>
