@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +63,7 @@
 </head>
 <body>
     <div id="video-container">
-        <video id="video" autoplay loop muted>
+        <video id="video" autoplay loop>
             <source src="./videoforar.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -85,6 +84,7 @@
     <script>
         // Handle the 'SHAKE OFF' button click event
         document.getElementById('shake-off-button').addEventListener('click', function() {
+            console.log('Shake Off button clicked');
             document.getElementById('video-container').style.display = 'none';
             document.getElementById('video').pause();
             document.getElementById('shake-off-button').style.display = 'none';
@@ -93,6 +93,7 @@
 
         // Show the video when marker is detected
         document.addEventListener('arjs-marker-found', function(ev){
+            console.log('Marker found');
             document.getElementById('video-container').style.display = 'flex';
             document.getElementById('video').play();
             document.getElementById('shake-off-button').style.display = 'block';
@@ -100,6 +101,7 @@
 
         // Hide the video and button when marker is lost
         document.addEventListener('arjs-marker-lost', function(ev){
+            console.log('Marker lost');
             document.getElementById('video-container').style.display = 'none';
             document.getElementById('video').pause();
             document.getElementById('shake-off-button').style.display = 'none';
