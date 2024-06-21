@@ -57,7 +57,7 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
-<body>
+<body style="margin: 0; overflow: hidden;">
     <!-- <div id="video-container">
         <video id="video" autoplay loop muted>
             <source src="./videoforar.mp4" type="video/mp4">
@@ -70,11 +70,11 @@
     <a-scene embedded arjs='sourceType: webcam;'>
         <a-marker preset="hiro">
             <!-- GLB Model -->
-            <a-gltf-model id="model" src="./BoomBox.glb" scale="0.2 0.2 0.2" position="0 0 0" rotation="0 0 0" visible="false"></a-gltf-model>
+            <a-gltf-model id="model" src="./BoomBox.glb" scale="1 1 1" position="0 0 0" rotation="0 0 0" visible="false"></a-gltf-model>
         </a-marker>
         
         <!-- Camera -->
-        <a-entity camera position="0 0 5"></a-entity>
+        <a-entity camera ></a-entity>
     </a-scene>
 
     <!-- <script>
