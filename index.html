@@ -74,11 +74,11 @@
     <a-scene embedded arjs='sourceType: webcam;'>
         <a-marker preset="hiro">
             <!-- GLB Model -->
-            <a-gltf-model id="model" src="./BoomBox.glb" scale="0.5 0.5 0.5" position="0 0 0" visible="false"></a-gltf-model>
+            <a-gltf-model id="model" src="./BoomBox.glb" scale="0.2 0.2 0.2" position="0 0 0" rotation="0 0 0" visible="false"></a-gltf-model>
         </a-marker>
         
         <!-- Camera -->
-        <a-entity camera></a-entity>
+        <a-entity camera position="0 0 10"></a-entity>
     </a-scene>
 
     <script>
