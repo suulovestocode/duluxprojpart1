@@ -31,20 +31,6 @@
             max-height: 100%;
             object-fit: contain;
         }
-        #shake-off-button {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            font-size: 20px;
-            background-color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 2;
-            display: none;
-        }
         a-scene {
             position: fixed;
             top: 0;
@@ -57,7 +43,7 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
+<body>
     <div id="video-container">
         <video id="video" autoplay loop muted playsinline>
             <source src="./videoforar.mp4" type="video/mp4">
@@ -65,12 +51,9 @@
         </video>
     </div> 
 
-    <button id="shake-off-button">SHAKE OFF</button>
-
-    <a-scene embedded arjs='sourceType: webcam;'>
+    <a-scene embedded arjs>
         <a-marker preset="hiro">
-            <!-- GLB Model -->
-            <a-gltf-model id="model" src="./BoomBox.glb" scale="1 1 1" position="0 0.5 0" rotation="0 0 0" visible="false"></a-gltf-model>
+            <!-- No 3D Model -->
         </a-marker>
         
         <!-- Camera -->
@@ -78,15 +61,6 @@
     </a-scene>
 
     <script>
-        // Handle the 'SHAKE OFF' button click event
-        document.getElementById('shake-off-button').addEventListener('click', function() {
-            console.log('Shake Off button clicked');
-            document.getElementById('video-container').style.display = 'none';
-            document.getElementById('video').pause();
-            document.getElementById('shake-off-button').style.display = 'none';
-            document.getElementById('model').setAttribute('visible', 'true');
-        });
-
         // Show the video when marker is detected
         document.addEventListener('arjs-marker-found', function(ev){
             console.log('Marker found');
@@ -95,16 +69,13 @@
             video.play().catch(error => {
                 console.error('Error trying to play the video:', error);
             });
-            document.getElementById('shake-off-button').style.display = 'block';
         });
 
-        // Hide the video and button when marker is lost
+        // Hide the video when marker is lost
         document.addEventListener('arjs-marker-lost', function(ev){
             console.log('Marker lost');
             document.getElementById('video-container').style.display = 'none';
             document.getElementById('video').pause();
-            document.getElementById('shake-off-button').style.display = 'none';
-            document.getElementById('model').setAttribute('visible', 'false');
         });
     </script> 
 </body>
