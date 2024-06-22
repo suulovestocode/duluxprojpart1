@@ -59,7 +59,7 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
     <div id="video-container">
-        <video id="video" autoplay loop muted>
+        <video id="video" autoplay loop muted playsinline>
             <source src="./videoforar.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -67,17 +67,17 @@
 
     <button id="shake-off-button">SHAKE OFF</button>
 
-    <a-scene embedded arjs>
+    <a-scene embedded arjs='sourceType: webcam;'>
         <a-marker preset="hiro">
             <!-- GLB Model -->
-            <a-gltf-model id="model" src="./BoomBox.glb" scale="1 1 1" position="0 0.5 0" rotation="0 0 0"></a-gltf-model>
+            <a-gltf-model id="model" src="./BoomBox.glb" scale="1 1 1" position="0 0.5 0" rotation="0 0 0" visible="false"></a-gltf-model>
         </a-marker>
         
         <!-- Camera -->
-        <a-entity camera ></a-entity>
+        <a-entity camera></a-entity>
     </a-scene>
 
-     <script>
+    <script>
         // Handle the 'SHAKE OFF' button click event
         document.getElementById('shake-off-button').addEventListener('click', function() {
             console.log('Shake Off button clicked');
@@ -91,7 +91,10 @@
         document.addEventListener('arjs-marker-found', function(ev){
             console.log('Marker found');
             document.getElementById('video-container').style.display = 'flex';
-            document.getElementById('video').play();
+            var video = document.getElementById('video');
+            video.play().catch(error => {
+                console.error('Error trying to play the video:', error);
+            });
             document.getElementById('shake-off-button').style.display = 'block';
         });
 
