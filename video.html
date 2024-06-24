@@ -35,7 +35,10 @@
     <button id="shakeOffButton">Shake Off</button>
     <div id="sceneContainer">
         <a-scene embedded>
-            <a-box position="0 1.5 -5" rotation="0 45 0" color="yellow" visible="false" id="myBox"></a-box>
+            <a-assets>
+                <a-asset-item id="houseModel" src="./House webAR.glb"></a-asset-item>
+            </a-assets>
+            <a-gltf-model src="#houseModel" position="0 0 -5" rotation="0 45 0" visible="false" id="myModel"></a-gltf-model>
             <a-camera></a-camera>
         </a-scene>
     </div>
@@ -44,7 +47,7 @@
         const video = document.getElementById('videoPlayer');
         const button = document.getElementById('shakeOffButton');
         const sceneContainer = document.getElementById('sceneContainer');
-        const box = document.getElementById('myBox');
+        const model = document.getElementById('myModel');
 
         // Ensure the video is playing automatically
         video.play().then(() => {
@@ -64,7 +67,7 @@
         // Show the 3D object when the button is clicked
         button.addEventListener('click', () => {
             sceneContainer.style.display = 'block';
-            box.setAttribute('visible', 'true');
+            model.setAttribute('visible', 'true');
         });
     </script>
 </body>
