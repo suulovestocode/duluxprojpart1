@@ -3,78 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR.js Marker Detection with Fullscreen Responsive Video</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-        }
-        
-        #video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-        }
-        
-        #video-container video {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        a-scene {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-    </style>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <title>Video Page</title>
 </head>
-<body>
-    <div id="video-container" style="display: none;">
-        <video id="video" autoplay loop muted>
-            <source src="path/to/your/video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <a-scene embedded arjs>
-        <a-marker preset="hiro">
-            <!-- GLB Model -->
-            <a-gltf-model src="path/to/your/model.glb" scale="0.5 0.5 0.5" position="0 0 0"></a-gltf-model>
-        </a-marker>
-        
-        <!-- Camera -->
-        <a-entity camera></a-entity>
-    </a-scene>
-
-    <script>
-        // Show the video when marker is detected
-        document.addEventListener('arjs-marker-found', function(ev){
-            document.getElementById('video-container').style.display = 'flex';
-            document.getElementById('video').play();
-        });
-
-        // Hide the video when marker is lost
-        document.addEventListener('arjs-marker-lost', function(ev){
-            document.getElementById('video-container').style.display = 'none';
-            document.getElementById('video').pause();
-        });
-    </script>
+<body style="margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: black;">
+    <video width="80%" controls autoplay>
+        <source src="./videoforar.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 </body>
 </html>
