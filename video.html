@@ -4,11 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Page</title>
+    <style>
+        #shakeOffButton {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body style="margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: black;">
-    <video width="80%" controls autoplay>
+<body style="margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: black; position: relative;">
+    <video id="videoPlayer" width="80%" controls autoplay>
         <source src="./videoforar.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+    <button id="shakeOffButton">Shake Off</button>
+
+    <script>
+        const video = document.getElementById('videoPlayer');
+        const button = document.getElementById('shakeOffButton');
+
+        video.addEventListener('play', () => {
+            setTimeout(() => {
+                button.style.display = 'block';
+            }, 2000); // 2000 milliseconds = 2 seconds
+        });
+    </script>
 </body>
 </html>
