@@ -36,6 +36,7 @@
             height: 100%;
             display: none;
             z-index: 0; /* Ensure scene container is below other elements */
+            background-color: black;
         }
     </style>
 </head>
@@ -54,6 +55,7 @@
             </a-assets>
             <a-gltf-model src="#houseModel" position="0 0 -5" rotation="0 45 0" scale="5 5 5" visible="false" id="myModel"></a-gltf-model>
             <a-camera></a-camera>
+            <a-sky color="#000000"></a-sky> <!-- Set the background color of the scene to black -->
         </a-scene>
     </div>
 
