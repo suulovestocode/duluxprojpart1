@@ -16,7 +16,6 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            z-index: 2; /* Ensure button is above other elements */
         }
         #videoContainer {
             display: flex;
@@ -26,7 +25,6 @@
             height: auto;
             position: relative;
             background-color: black;
-            z-index: 1; /* Ensure video container is below the button */
         }
         #sceneContainer {
             position: absolute;
@@ -35,8 +33,6 @@
             width: 100%;
             height: 100%;
             display: none;
-            z-index: 0; /* Ensure scene container is below other elements */
-            background-color: black;
         }
     </style>
 </head>
@@ -55,7 +51,6 @@
             </a-assets>
             <a-gltf-model src="#houseModel" position="0 0 -5" rotation="0 45 0" scale="5 5 5" visible="false" id="myModel"></a-gltf-model>
             <a-camera></a-camera>
-            <a-sky color="#000000"></a-sky> <!-- Set the background color of the scene to black -->
         </a-scene>
     </div>
 
@@ -64,7 +59,6 @@
         const button = document.getElementById('shakeOffButton');
         const sceneContainer = document.getElementById('sceneContainer');
         const model = document.getElementById('myModel');
-        const videoContainer = document.getElementById('videoContainer');
 
         // Ensure the video is playing automatically
         video.play().then(() => {
@@ -80,12 +74,10 @@
                 button.style.display = 'block';
             }, 2000); // 2000 milliseconds = 2 seconds
         });
-
-        // Show the 3D object and hide the video when the button is clicked
+        // Show the 3D object when the button is clicked
         button.addEventListener('click', () => {
             sceneContainer.style.display = 'block';
             model.setAttribute('visible', 'true');
-            videoContainer.style.display = 'none';
         });
     </script>
 </body>
