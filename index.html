@@ -16,11 +16,22 @@
 <body>
     <a-scene embedded arjs='sourceType: webcam;'>
         <a-marker type="pattern" url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro" emitevents="true">
-            <a-gltf-model src="./House webAR.glb" scale="0.1 0.1 0.1" position="0 0 0" rotation="0 0 0"></a-gltf-model>
+            <a-video src="#my-video" width="4" height="2.25" position="0 1 0" rotation="0 0 0"></a-video>
+            <a-gltf-model src="./House webAR.glb" scale="0.1 0.1 0.1" position="0 0 -5" rotation="0 0 0"></a-gltf-model>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
+    
+    <video id="my-video" src="./videoforar.mp4" style="display: none;"></video>
     <script>
+        document.querySelector('a-marker').addEventListener('markerFound', () => {
+            const video = document.getElementById('my-video');
+            video.play();
+        });
+        document.querySelector('a-marker').addEventListener('markerLost', () => {
+            const video = document.getElementById('my-video');
+            video.pause();
+        });
     </script>
 </body>
 </html>
