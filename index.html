@@ -29,5 +29,15 @@
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const video = document.querySelector('#video');
+          video.play();
+          // To ensure the video is loaded and ready to play
+          video.addEventListener('canplay', function() {
+            video.play();
+          });
+        });
+      </script>
   </body>
 </html>
