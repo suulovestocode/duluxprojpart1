@@ -4,8 +4,25 @@
     <title>AR.js Example</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
-  </head>
+    <style>
+        #controls {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          z-index: 1;
+        }
+        #controls button {
+          font-size: 16px;
+          margin: 5px;
+          padding: 10px;
+        }
+      </style>
+</head>
   <body style="margin: 0; overflow: hidden;">
+    <div id="controls">
+        <button id="playButton">Play</button>
+        <button id="pauseButton">Pause</button>
+      </div>
     <a-scene embedded arjs>
       <a-assets>
         <a-asset-item id="3d-model" src="./House webAR.glb"></a-asset-item>
@@ -32,7 +49,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
           const video = document.querySelector('#video');
-          video.play();
+          const playButton = document.getElementById('playButton');
+          const pauseButton = document.getElementById('pauseButton');
+          playButton.addEventListener('click', function() {
+            video.play();
+          });
+
+          pauseButton.addEventListener('click', function() {
+            video.pause();
+          });
           // To ensure the video is loaded and ready to play
           video.addEventListener('canplay', function() {
             video.play();
