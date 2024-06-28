@@ -8,7 +8,7 @@
 <body style="margin: 0; overflow: hidden;">
   <a-scene embedded arjs>
     <a-assets>
-      <a-asset-item id="3d-model" src="./House webAR.glb"></a-asset-item>
+      <a-asset-item id="3d-model" src="./house .glb"></a-asset-item>
       <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
     </a-assets>
     <a-marker preset="hiro">
@@ -43,12 +43,10 @@
       const videoElement = document.querySelector('#video');
       const arVideoEntity = document.querySelector('#ar-video');
       const collider = document.querySelector('#collider');
-
       // Ensure the video plays once it can
       videoElement.addEventListener('canplay', function() {
         videoElement.play();
       });
-
       // Toggle play/pause on click
       arVideoEntity.addEventListener('click', function() {
         if (videoElement.paused) {
@@ -57,7 +55,6 @@
           videoElement.pause();
         }
       });
-
       // Add pink cube on collider click
       collider.addEventListener('click', function() {
         const scene = document.querySelector('a-scene');
