@@ -27,39 +27,28 @@
           scale="1 1 1"
           position="0.5 0 0"
         ></a-video>
-        <a-entity id="playButton" geometry="primitive: box" material="color: green" position="0.5 0.5 0"></a-entity>
-        <a-entity id="pauseButton" geometry="primitive: box" material="color: red" position="0.5 0.3 0"></a-entity>
-        <a-entity id="seekButton" geometry="primitive: box" material="color: blue" position="0.5 0.1 0"></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const videoElement = document.querySelector('#video');
-          const playButton = document.querySelector('#playButton');
-          const pauseButton = document.querySelector('#pauseButton');
-          const seekButton = document.querySelector('#seekButton');
-    
-          // Ensure the video plays once it can
-          videoElement.addEventListener('canplay', function() {
-            videoElement.play();
-          });
-    
-          // Play button
-          playButton.addEventListener('click', function() {
-            videoElement.play();
-          });
-    
-          // Pause button
-          pauseButton.addEventListener('click', function() {
-            videoElement.pause();
-          });
-    
-          // Seek button
-          seekButton.addEventListener('click', function() {
-            videoElement.currentTime += 5; // Seek forward by 5 seconds
-          });
+      document.addEventListener('DOMContentLoaded', function() {
+        const videoElement = document.querySelector('#video');
+        const arVideoEntity = document.querySelector('#ar-video');
+
+        // Ensure the video plays once it can
+        videoElement.addEventListener('canplay', function() {
+          videoElement.play();
         });
-      </script>
+
+        // Toggle play/pause on click
+        arVideoEntity.addEventListener('click', function() {
+          if (videoElement.paused) {
+            videoElement.play();
+          } else {
+            videoElement.pause();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
