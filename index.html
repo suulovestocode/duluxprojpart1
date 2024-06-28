@@ -1,54 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>AR.js Example</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-      <a-assets>
-        <a-asset-item id="3d-model" src="./House webAR.glb"></a-asset-item>
-        <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
-      </a-assets>
-      <a-marker preset="hiro">
-        <a-entity
-          gltf-model="#3d-model"
-          scale="1 1 1"
-          rotation="270 0 0"
-          position="-0.5 0 0"
-        ></a-entity>
-        <a-video
-          id="ar-video"
-          src="#video"
-          width="0.6"
-          height="0.3"
-          rotation="-90 0 0"
-          scale="1 1 1"
-          position="0.5 0 0"
-        ></a-video>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const videoElement = document.querySelector('#video');
-        const arVideoEntity = document.querySelector('#ar-video');
+<head>
+  <title>AR.js Example</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <a-assets>
+      <a-asset-item id="3d-model" src="./House webAR.glb"></a-asset-item>
+      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
+    </a-assets>
+    <a-marker preset="hiro">
+      <a-entity
+        id="house-model"
+        gltf-model="#3d-model"
+        scale="1 1 1"
+        rotation="270 0 0"
+        position="-0.5 0 0"
+      ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+      ></a-video>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      const arVideoEntity = document.querySelector('#ar-video');
+      const houseModel = document.querySelector('#house-model');
 
-        // Ensure the video plays once it can
-        videoElement.addEventListener('canplay', function() {
-          videoElement.play();
-        });
-
-        // Toggle play/pause on click
-        arVideoEntity.addEventListener('click', function() {
-          if (videoElement.paused) {
-            videoElement.play();
-          } else {
-            videoElement.pause();
-          }
-        });
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
       });
-    </script>
-  </body>
+
+      // Toggle play/pause on click
+      arVideoEntity.addEventListener('click', function() {
+        if (videoElement.paused) {
+          videoElement.play();
+        } else {
+          videoElement.pause();
+        }
+      });
+
+      // Add pink cube on 3D model click
+      houseModel.addEventListener('click', function() {
+        const scene = document.querySelector('a-scene');
+        const pinkCube = document.createElement('a-entity');
+        pinkCube.setAttribute('geometry', { primitive: 'box' });
+        pinkCube.setAttribute('material', { color: 'pink' });
+        pinkCube.setAttribute('position', { x: 0, y: 1, z: 0 });
+        pinkCube.setAttribute('scale', { x: 0.5, y: 0.5, z: 0.5 });
+        scene.appendChild(pinkCube);
+      });
+    });
+  </script>
+</body>
 </html>
