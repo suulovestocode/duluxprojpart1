@@ -18,7 +18,9 @@
         scale="1 1 1"
         rotation="270 0 0"
         position="-0.5 0 0"
-      ></a-entity>
+      >
+        <a-box id="collider" position="0 0.5 0" scale="1 1 1" opacity="0"></a-box>
+      </a-entity>
       <a-video
         id="ar-video"
         src="#video"
@@ -35,11 +37,13 @@
     document.addEventListener('DOMContentLoaded', function() {
       const videoElement = document.querySelector('#video');
       const arVideoEntity = document.querySelector('#ar-video');
-      const houseModel = document.querySelector('#house-model');
+      const collider = document.querySelector('#collider');
+
       // Ensure the video plays once it can
       videoElement.addEventListener('canplay', function() {
         videoElement.play();
       });
+
       // Toggle play/pause on click
       arVideoEntity.addEventListener('click', function() {
         if (videoElement.paused) {
@@ -48,8 +52,9 @@
           videoElement.pause();
         }
       });
-      // Add pink cube on 3D model click
-      houseModel.addEventListener('click', function() {
+
+      // Add pink cube on collider click
+      collider.addEventListener('click', function() {
         const scene = document.querySelector('a-scene');
         const pinkCube = document.createElement('a-entity');
         pinkCube.setAttribute('geometry', { primitive: 'box' });
