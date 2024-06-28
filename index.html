@@ -36,12 +36,10 @@
       const videoElement = document.querySelector('#video');
       const arVideoEntity = document.querySelector('#ar-video');
       const houseModel = document.querySelector('#house-model');
-
       // Ensure the video plays once it can
       videoElement.addEventListener('canplay', function() {
         videoElement.play();
       });
-
       // Toggle play/pause on click
       arVideoEntity.addEventListener('click', function() {
         if (videoElement.paused) {
@@ -50,7 +48,6 @@
           videoElement.pause();
         }
       });
-
       // Add pink cube on 3D model click
       houseModel.addEventListener('click', function() {
         const scene = document.querySelector('a-scene');
