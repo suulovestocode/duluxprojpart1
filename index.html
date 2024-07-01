@@ -34,11 +34,25 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const videoElement = document.querySelector('#video');
+
       // Ensure the video plays once it can
       videoElement.addEventListener('canplay', function() {
         videoElement.play();
       });
+
+      // Log messages to ensure the script runs correctly
+      console.log('AR.js scene loaded');
     });
+
+    // Check if the camera is being accessed
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        console.log('Camera access granted');
+        stream.getTracks().forEach(track => track.stop()); // Stop the stream to avoid keeping the camera on
+      })
+      .catch(function(err) {
+        console.error('Camera access denied:', err);
+      });
   </script>
 </body>
 </html>
