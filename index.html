@@ -1,40 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>AR.js Video Example</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.5/aframe/build/aframe-ar.min.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false; markersAreaEnabled: false;">
-      <!-- Define the AR.js marker -->
-      <a-marker preset="hiro">
-        <!-- Video object -->
-        <a-video src="#my-video" width="4" height="2" position="-2 1 0"></a-video>
+<head>
+  <title>AR.js Example</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
+  <style>
+    /* Hide the actual video element */
+    video {
+      display: none;
+    }
+  </style>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <a-assets>
+      <a-asset-item id="3d-model" src="./house.glb"></a-asset-item>
+      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
+    </a-assets>
+    <a-marker preset="hiro">
+      <a-entity
+        id="house-model"
+        gltf-model="#3d-model"
+        scale="1 1 1"
+        rotation="270 0 0"
+        position="-0.5 0 0"
+      ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+        class="clickable-video" 
+      ></a-video>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 
-        <!-- 3D object -->
-        <a-box position="2 1 0" depth="1" height="1" width="1" color="blue" id="my-box"></a-box>
-      </a-marker>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      const arVideoElement = document.querySelector('#ar-video');
 
-      <!-- Camera setup -->
-      <a-entity camera></a-entity>
-    </a-scene>
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
+      });
 
-    <video id="my-video" src="./videoforar.mp4" style="display: none;"></video>
-
-    <script>
-      // Function to handle video play/pause
-      function handleVideoClick() {
-        var video = document.getElementById('my-video');
-        if (video.paused) {
-          video.play();
+      // Handle video play/pause on click
+      arVideoElement.addEventListener('click', function() {
+        if (videoElement.paused) {
+          videoElement.play();
         } else {
-          video.pause();
+          videoElement.pause();
         }
-      }
+      });
 
-      // Add event listener for video click
-      document.querySelector('a-video').addEventListener('click', handleVideoClick);
-    </script>
-  </body>
+      // Log messages to ensure the script runs correctly
+      console.log('AR.js scene loaded');
+    });
+
+    // Check if the camera is being accessed
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        console.log('Camera access granted');
+        stream.getTracks().forEach(track => track.stop()); // Stop the stream to avoid keeping the camera on
+      })
+      .catch(function(err) {
+        console.error('Camera access denied:', err);
+      });
+  </script>
+</body>
 </html>
