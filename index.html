@@ -1,51 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>AR.js Example</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.5/aframe/build/aframe-ar.min.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-      <!-- Define the AR.js marker -->
-      <a-marker preset="hiro">
-        <!-- Blue sphere object -->
-        <a-sphere position="-1 0.5 0" radius="0.5" color="blue" id="blue-sphere"></a-sphere>
-
-        <!-- Red sphere object -->
-        <a-sphere position="1 0.5 0" radius="0.5" color="red" id="red-sphere"></a-sphere>
-
-        <!-- Hidden blue cube object -->
-        <a-box position="-1 0.5 0" depth="0.5" height="0.5" width="0.5" color="blue" visible="false" id="blue-cube"></a-box>
-
-        <!-- Hidden red cube object -->
-        <a-box position="1 0.5 0" depth="0.5" height="0.5" width="0.5" color="red" visible="false" id="red-cube"></a-box>
-      </a-marker>
-
-      <!-- Camera setup -->
-      <a-entity camera></a-entity>
-    </a-scene>
-
-    <script>
-      // Function to handle sphere taps
-      function handleSphereTap(sphereId, cubeId) {
-        // Get the sphere and cube elements
-        var sphere = document.getElementById(sphereId);
-        var cube = document.getElementById(cubeId);
-
-        // Hide the sphere and show the cube
-        sphere.setAttribute('visible', false);
-        cube.setAttribute('visible', true);
-      }
-
-      // Add event listeners for sphere taps
-      document.getElementById('blue-sphere').addEventListener('click', function () {
-        handleSphereTap('blue-sphere', 'blue-cube');
+<head>
+  <title>AR.js Example</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <a-assets>
+      <a-asset-item id="3d-model" src="./house.glb"></a-asset-item>
+      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
+    </a-assets>
+    <a-marker preset="hiro">
+      <a-entity
+        id="house-model"
+        gltf-model="#3d-model"
+        scale="1 1 1"
+        rotation="270 0 0"
+        position="-0.5 0 0"
+      ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+      ></a-video>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
       });
-
-      document.getElementById('red-sphere').addEventListener('click', function () {
-        handleSphereTap('red-sphere', 'red-cube');
-      });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
