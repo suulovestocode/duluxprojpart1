@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basic A-Frame Click Test</title>
+  <title>AR.js with Click Test</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.5/aframe/build/aframe-ar.min.js"></script>
 </head>
 <body>
-  <a-scene>
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    loading-screen="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    arjs="trackingMethod: best; sourceType: webcam;"
+    id="scene"
+    gesture-detector
+  >
     <!-- Basic clickable box -->
     <a-box position="0 1 -3" depth="1" height="1" width="1" color="red" id="clickable-box"></a-box>
 
     <!-- Camera setup -->
-    <a-entity camera look-controls></a-entity>
+    <a-entity camera></a-entity>
   </a-scene>
 
   <script>
@@ -27,3 +35,4 @@
   </script>
 </body>
 </html>
+
