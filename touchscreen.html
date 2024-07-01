@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Click Test</title>
+  <title>Basic A-Frame Click Test</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
   <a-scene>
-    <!-- Simple clickable object -->
+    <!-- Basic clickable box -->
     <a-box position="0 1 -3" depth="1" height="1" width="1" color="red" id="clickable-box"></a-box>
 
     <!-- Camera setup -->
@@ -15,9 +15,14 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('clickable-box').addEventListener('click', function () {
-        alert('Box clicked!');
-      });
+      const box = document.getElementById('clickable-box');
+      if (box) {
+        box.addEventListener('click', function () {
+          alert('Box clicked!');
+        });
+      } else {
+        console.error('Box element not found');
+      }
     });
   </script>
 </body>
