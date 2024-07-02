@@ -37,6 +37,7 @@
 
       // Function to create small boxes
       function createBoxes() {
+        console.log('Creating boxes...');
         for (let i = 0; i < 5; i++) {
           const box = document.createElement('a-box');
           box.setAttribute('position', { x: Math.random() * 0.4 - 0.2, y: Math.random() * 0.4, z: Math.random() * 0.4 - 0.2 });
@@ -48,6 +49,7 @@
 
       // Add click event listener to the house model
       houseModel.addEventListener('click', createBoxes);
+      console.log('Event listener added to house model');
 
       const videoElement = document.querySelector('#video');
 
