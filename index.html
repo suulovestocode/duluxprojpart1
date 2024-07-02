@@ -1,30 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>
-    DULUX</title>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
-<style>
-    /* Hide the actual video element */
-    video {
-      display: none;
-    }
-  </style>
+  <title>AR.js Example</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene
-  vr-mode-ui="enabled: false;"
-  loading-screen="enabled: false;"
-  renderer="logarithmicDepthBuffer: true;"
-  arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-  id="scene"
-  embedded
-  gesture-detector
->
+  <a-scene embedded arjs>
     <a-assets>
       <a-asset-item id="3d-model" src="./house .glb"></a-asset-item>
       <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
@@ -45,29 +27,17 @@
         rotation="-90 0 0"
         scale="1 1 1"
         position="0.5 0 0"
-        class="clickable-video" 
       ></a-video>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const videoElement = document.querySelector('#video');
-      const arVideoElement = document.querySelector('#ar-video');
 
       // Ensure the video plays once it can
       videoElement.addEventListener('canplay', function() {
         videoElement.play();
-      });
-
-      // Handle video play/pause on click
-      arVideoElement.addEventListener('click', function() {
-        if (videoElement.paused) {
-          videoElement.play();
-        } else {
-          videoElement.pause();
-        }
       });
 
       // Log messages to ensure the script runs correctly
