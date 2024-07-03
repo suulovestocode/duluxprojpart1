@@ -9,6 +9,7 @@
   <a-scene embedded arjs>
     <a-assets>
       <a-asset-item id="3d-model" src="./house.glb"></a-asset-item>
+      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
     </a-assets>
     <a-marker preset="hiro">
       <a-entity
@@ -18,15 +19,41 @@
         rotation="270 0 0"
         position="-0.5 0 0"
       ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+      ></a-video>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      const arVideoEntity = document.querySelector('#ar-video');
       const houseModel = document.querySelector('#house-model');
+
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
+      });
+
+      // Toggle play/pause on click
+      arVideoEntity.addEventListener('click', function() {
+        if (videoElement.paused) {
+          videoElement.play();
+        } else {
+          videoElement.pause();
+        }
+      });
 
       // Function to create small boxes around the house
       function createBoxes() {
+        const scene = document.querySelector('a-scene');
         for (let i = 0; i < 5; i++) {
           const smallBox = document.createElement('a-box');
           smallBox.setAttribute('position', { 
@@ -40,8 +67,8 @@
         }
       }
 
-      // Create boxes after 5 seconds
-      setTimeout(createBoxes, 5000);
+      // Create boxes after 10 seconds
+      setTimeout(createBoxes, 10000);
 
       // Log messages to ensure the script runs correctly
       console.log('AR.js scene loaded');
