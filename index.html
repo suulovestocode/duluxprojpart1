@@ -8,7 +8,7 @@
 <body style="margin: 0; overflow: hidden;">
   <a-scene embedded arjs>
     <a-assets>
-      <a-asset-item id="3d-model" src="./house .glb"></a-asset-item>
+      <a-asset-item id="3d-model" src="./house.glb"></a-asset-item>
       <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
     </a-assets>
     <a-marker preset="hiro">
@@ -53,17 +53,16 @@
 
       // Function to create small boxes around the house in a semi-circular format
       function createBoxes() {
-        const scene = document.querySelector('a-scene');
         const numBoxes = 10; // Number of boxes
         const radius = 2; // Radius of the semi-circle
         const angleStep = Math.PI / (numBoxes - 1); // Angle between boxes
 
         for (let i = 0; i < numBoxes; i++) {
           const smallBox = document.createElement('a-box');
-          const angle = i * angleStep;
+          const angle = i * angleStep - (Math.PI / 2); // Adjust angle to start from the front of the house
           const x = Math.cos(angle) * radius;
           const z = Math.sin(angle) * radius;
-          smallBox.setAttribute('position', { x: x, y: 0.5, z: z });
+          smallBox.setAttribute('position', { x: x - 0.5, y: 0.5, z: z }); // Adjust position relative to house
           smallBox.setAttribute('scale', '0.2 0.2 0.2');
           smallBox.setAttribute('color', 'orange');
           houseModel.appendChild(smallBox);
