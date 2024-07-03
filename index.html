@@ -19,23 +19,50 @@
         rotation="270 0 0"
         position="-0.5 0 0"
       ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+      ></a-video>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      const arVideoEntity = document.querySelector('#ar-video');
       const houseModel = document.querySelector('#house-model');
 
-      // Function to create small boxes around the house in a semi-circle
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
+      });
+
+      // Toggle play/pause on click
+      arVideoEntity.addEventListener('click', function() {
+        if (videoElement.paused) {
+          videoElement.play();
+        } else {
+          videoElement.pause();
+        }
+      });
+
+      // Function to create small boxes around the house in a semi-circular format
       function createBoxes() {
         const scene = document.querySelector('a-scene');
-        const radius = 1.5; // Radius of the semi-circle
-        const numBoxes = 5; // Number of boxes
+        const numBoxes = 10; // Number of boxes
+        const radius = 2; // Radius of the semi-circle
+        const angleStep = Math.PI / (numBoxes - 1); // Angle between boxes
+
         for (let i = 0; i < numBoxes; i++) {
-          const angle = Math.PI * (i / (numBoxes - 1)); // Angle for semi-circle
-          const x = radius * Math.cos(angle);
-          const z = radius * Math.sin(angle);
           const smallBox = document.createElement('a-box');
+          const angle = i * angleStep;
+          const x = Math.cos(angle) * radius;
+          const z = Math.sin(angle) * radius;
           smallBox.setAttribute('position', { x: x, y: 0.5, z: z });
           smallBox.setAttribute('scale', '0.2 0.2 0.2');
           smallBox.setAttribute('color', 'orange');
