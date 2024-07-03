@@ -56,13 +56,14 @@
         const numBoxes = 5; // Number of boxes
         const radius = 2; // Radius of the semi-circle
         const angleStep = Math.PI / (numBoxes - 1); // Angle between boxes
+        const heightAboveHouse = 1; // Height above the house model
 
         for (let i = 0; i < numBoxes; i++) {
           const smallBox = document.createElement('a-box');
           const angle = i * angleStep - (Math.PI / 2); // Adjust angle to start from the front of the house
           const x = Math.cos(angle) * radius;
           const z = Math.sin(angle) * radius;
-          smallBox.setAttribute('position', { x: x - 0.5, y: 0.5, z: z }); // Adjust position relative to house
+          smallBox.setAttribute('position', { x: x - 0.5, y: heightAboveHouse, z: z }); // Adjust position relative to house
           smallBox.setAttribute('scale', '0.2 0.2 0.2');
           smallBox.setAttribute('color', 'orange');
           houseModel.appendChild(smallBox);
