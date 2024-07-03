@@ -14,17 +14,22 @@
   </a-scene>
 
   <script>
-    AFRAME.registerComponent('change-color-on-timeout', {
+    AFRAME.registerComponent('change-color-on-click', {
       init: function () {
         var box = document.querySelector('#color-box');
-        setTimeout(function () {
+        box.addEventListener('click', function () {
           box.setAttribute('color', 'pink');
-        }, 5000); // Change color after 5 seconds
+        });
       }
     });
 
     document.querySelector('a-marker').addEventListener('markerFound', function () {
-      document.querySelector('#color-box').setAttribute('change-color-on-timeout', '');
+      document.querySelector('#color-box').setAttribute('visible', 'true');
+      document.querySelector('#color-box').setAttribute('change-color-on-click', '');
+    });
+
+    document.querySelector('a-marker').addEventListener('markerLost', function () {
+      document.querySelector('#color-box').setAttribute('visible', 'false');
     });
   </script>
 </body>
