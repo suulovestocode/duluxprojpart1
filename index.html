@@ -8,37 +8,81 @@
 <body style="margin: 0; overflow: hidden;">
   <a-scene embedded arjs>
     <a-assets>
-      <a-mixin id="clickable" geometry="primitive: box" material="color: blue" position="0 0.5 0"></a-mixin>
+      <a-asset-item id="3d-model" src="./house .glb"></a-asset-item>
+      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
     </a-assets>
-    
     <a-marker preset="hiro">
-      <a-entity id="color-box" mixin="clickable"></a-entity>
+      <a-entity
+        id="house-model"
+        gltf-model="#3d-model"
+        scale="1 1 1"
+        rotation="270 0 0"
+        position="-0.5 0 0"
+      ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+      ></a-video>
     </a-marker>
-    
     <a-entity camera></a-entity>
   </a-scene>
-
   <script>
-    AFRAME.registerComponent('change-color-on-click', {
-      init: function () {
-        var box = this.el;
-        box.addEventListener('click', function () {
-          box.setAttribute('material', 'color', 'pink');
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      const arVideoEntity = document.querySelector('#ar-video');
+      const houseModel = document.querySelector('#house-model');
+
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
+      });
+
+      // Toggle play/pause on click
+      arVideoEntity.addEventListener('click', function() {
+        if (videoElement.paused) {
+          videoElement.play();
+        } else {
+          videoElement.pause();
+        }
+      });
+
+      // Function to create small boxes around the house
+      function createBoxes() {
+        const scene = document.querySelector('a-scene');
+        for (let i = 0; i < 5; i++) {
+          const smallBox = document.createElement('a-box');
+          smallBox.setAttribute('position', { 
+            x: (Math.random() - 0.5) * 2, 
+            y: 0.5, 
+            z: (Math.random() - 0.5) * 2 
+          });
+          smallBox.setAttribute('scale', '0.2 0.2 0.2');
+          smallBox.setAttribute('color', 'darkpink');
+          houseModel.appendChild(smallBox);
+        }
       }
+
+      // Create boxes after 5 seconds
+      setTimeout(createBoxes, 5000);
+
+      // Log messages to ensure the script runs correctly
+      console.log('AR.js scene loaded');
     });
 
-    document.querySelector('#color-box').addEventListener('loaded', function () {
-      this.setAttribute('change-color-on-click', '');
-    });
-
-    document.querySelector('a-marker').addEventListener('markerFound', function () {
-      document.querySelector('#color-box').setAttribute('visible', 'true');
-    });
-
-    document.querySelector('a-marker').addEventListener('markerLost', function () {
-      document.querySelector('#color-box').setAttribute('visible', 'false');
-    });
+    // Check if the camera is being accessed
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        console.log('Camera access granted');
+        stream.getTracks().forEach(track => track.stop()); // Stop the stream to avoid keeping the camera on
+      })
+      .catch(function(err) {
+        console.error('Camera access denied:', err);
+      });
   </script>
 </body>
 </html>
