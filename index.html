@@ -7,69 +7,10 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
   <a-scene embedded arjs>
-    <a-assets>
-      <a-asset-item id="3d-model" src="./house .glb"></a-asset-item>
-      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
-    </a-assets>
     <a-marker preset="hiro">
-      <a-entity
-        id="house-model"
-        gltf-model="#3d-model"
-        scale="1 1 1"
-        rotation="270 0 0"
-        position="-0.5 0 0"
-      ></a-entity>
-      <a-video
-        id="ar-video"
-        src="#video"
-        width="0.6"
-        height="0.3"
-        rotation="-90 0 0"
-        scale="1 1 1"
-        position="0.5 0 0"
-      ></a-video>
+      <a-box position="0 0.5 0" color="blue"></a-box>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const houseModel = document.querySelector('#house-model');
-
-      // Function to create small boxes
-      function createBoxes() {
-        console.log('Creating boxes...');
-        for (let i = 0; i < 5; i++) {
-          const box = document.createElement('a-box');
-          box.setAttribute('position', { x: Math.random() * 0.4 - 0.2, y: Math.random() * 0.4, z: Math.random() * 0.4 - 0.2 });
-          box.setAttribute('scale', '0.1 0.1 0.1');
-          box.setAttribute('color', 'blue');
-          houseModel.appendChild(box);
-        }
-      }
-      // Add click event listener to the house model
-      houseModel.addEventListener('click', createBoxes);
-      console.log('Event listener added to house model');
-
-      const videoElement = document.querySelector('#video');
-
-      // Ensure the video plays once it can
-      videoElement.addEventListener('canplay', function() {
-        videoElement.play();
-      });
-
-      // Log messages to ensure the script runs correctly
-      console.log('AR.js scene loaded');
-    });
-
-    // Check if the camera is being accessed
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-        console.log('Camera access granted');
-        stream.getTracks().forEach(track => track.stop()); // Stop the stream to avoid keeping the camera on
-      })
-      .catch(function(err) {
-        console.error('Camera access denied:', err);
-      });
-  </script>
 </body>
 </html>
