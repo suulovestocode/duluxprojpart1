@@ -1,20 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-  
     const video = document.getElementById('video');
-    video.src = "./videoforar.mp4";
+    video.src = 'videoforar.mp4';
+  
+    // Load the video and set its size
     video.style.width = '320px';
     video.style.height = '240px';
   
-    // Load 3D models using Three.js
+    // Setup Three.js
+    const threeEntity = document.getElementById('three-model');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(320, 240);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0';
+    renderer.domElement.style.left = '0';
+    document.body.appendChild(renderer.domElement);
+  
+    // Load 3D models using GLTFLoader
     const loader = new THREE.GLTFLoader();
   
-    // Load house model
+    // Load house model (GLB)
     loader.load('house .glb', (gltf) => {
       const houseModel = gltf.scene;
       houseModel.position.set(0, 0, 0);
@@ -22,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       scene.add(houseModel);
     });
   
-    // Load another 3D model
-    loader.load('path/to/your/model.gltf', (gltf) => {
+    // Load another 3D model (GLB)
+    loader.load('path/to/your/model.glb', (gltf) => {
       const model = gltf.scene;
       model.position.set(1, 0, 0);
       model.scale.set(0.5, 0.5, 0.5);
@@ -32,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Add event listener to 3D model
       model.traverse((child) => {
         if (child.isMesh) {
-          child.on('click', () => {
+          child.addEventListener('click', () => {
             const geometry = new THREE.BoxGeometry();
             const material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
             const cube = new THREE.Mesh(geometry, material);
@@ -52,3 +58,4 @@ document.addEventListener('DOMContentLoaded', () => {
   
     animate();
   });
+  

@@ -5,17 +5,16 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="script.js" defer></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <a-entity id="house-model" gltf-model="#house" position="0 0 0" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity id="3d-model" gltf-model="#model" position="1 0 0" scale="0.5 0.5 0.5"></a-entity>
-        <a-entity id="pink-cube" geometry="primitive: box" material="color: pink" position="1 1 1" visible="false"></a-entity>
+        <a-entity id="three-model"></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
-    <video id="video" width="640" height="480" controls style="position: absolute; top: 0; left: 0;"></video>
+    <video id="video" width="320" height="240" controls style="position: absolute; top: 0; left: 0;"></video>
   </body>
 </html>
