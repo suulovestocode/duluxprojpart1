@@ -1,20 +1,91 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>AR.js and Three.js Example</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="script.js" defer></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-      <a-marker preset="hiro">
-        <a-entity id="three-model"></a-entity>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
-    <video id="video" width="320" height="240" controls style="position: absolute; top: 0; left: 0;"></video>
-  </body>
+<head>
+  <title>AR.js Example</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <a-assets>
+      <a-asset-item id="3d-model" src="./house .glb"></a-asset-item>
+      <video id="video" src="./videoforar.mp4" autoplay loop muted playsinline></video>
+    </a-assets>
+    <a-marker preset="hiro">
+      <a-entity
+        id="house-model"
+        gltf-model="#3d-model"
+        scale="1 1 1"
+        rotation="270 0 0"
+        position="-0.5 0 0"
+      ></a-entity>
+      <a-video
+        id="ar-video"
+        src="#video"
+        width="0.6"
+        height="0.3"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        position="0.5 0 0"
+      ></a-video>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoElement = document.querySelector('#video');
+      const arVideoEntity = document.querySelector('#ar-video');
+      const houseModel = document.querySelector('#house-model');
+
+      // Ensure the video plays once it can
+      videoElement.addEventListener('canplay', function() {
+        videoElement.play();
+      });
+
+      // Toggle play/pause on click
+      arVideoEntity.addEventListener('click', function() {
+        if (videoElement.paused) {
+          videoElement.play();
+        } else {
+          videoElement.pause();
+        }
+      });
+
+      // Function to create small boxes in a rainbow format above the house
+      function createBoxes() {
+        const numBoxes = 5; // Number of boxes
+        const radius = 2; // Radius of the semi-circle
+        const angleStep = Math.PI / (numBoxes - 1); // Angle between boxes
+        const heightAboveHouse = 1; // Height above the house model
+
+        for (let i = 0; i < numBoxes; i++) {
+          const smallBox = document.createElement('a-box');
+          const angle = i * angleStep - (Math.PI / 2); // Adjust angle to start from the front
+          const x = Math.cos(angle) * radius;
+          const z = Math.sin(angle) * radius;
+          smallBox.setAttribute('position', { x: x - 0.5, y: heightAboveHouse, z: z }); // Position above the house
+          smallBox.setAttribute('scale', '0.2 0.2 0.2');
+          smallBox.setAttribute('color', 'orange');
+          houseModel.appendChild(smallBox);
+        }
+      }
+
+      // Create boxes after 10 seconds
+      setTimeout(createBoxes, 10000);
+
+      // Log messages to ensure the script runs correctly
+      console.log('AR.js scene loaded');
+    });
+
+    // Check if the camera is being accessed
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        console.log('Camera access granted');
+        stream.getTracks().forEach(track => track.stop()); // Stop the stream to avoid keeping the camera on
+      })
+      .catch(function(err) {
+        console.error('Camera access denied:', err);
+      });
+  </script>
+</body>
 </html>
